@@ -45,10 +45,22 @@ public class UserEntity extends BaseEntity {
 //    @OneToMany(mappedBy="users", fetch = FetchType.LAZY)
 //    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
 
+
+
+    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY)
+    List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
-
 
     public String getUserName() {
         return userName;

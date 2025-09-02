@@ -1,6 +1,5 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.entity.AssignmentBuilding;
 import com.javaweb.model.dto.AssigntmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;

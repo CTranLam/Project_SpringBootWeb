@@ -19,7 +19,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "building")
 public class BuildingEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,20 +54,23 @@ public class BuildingEntity {
     @Column(name = "brokeragefee")
     private Double brokerageFee;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid",nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
-    private List<UserEntity> userEntities = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "assignmentbuilding",
+//            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
+//            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+//    private List<UserEntity> userEntities = new ArrayList<>();
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
     }
 
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
     }
-
     public Long getId() {
         return id;
     }

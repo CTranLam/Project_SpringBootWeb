@@ -1,4 +1,4 @@
-package com.javaweb.repository.custom;
+package com.javaweb.repository;
 
 import com.javaweb.entity.BuildingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
