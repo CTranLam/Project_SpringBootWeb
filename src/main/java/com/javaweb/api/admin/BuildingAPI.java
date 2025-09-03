@@ -15,11 +15,11 @@ public class BuildingAPI {
     @Autowired
     private BuildingService buildingService;
 
-    @PostMapping
-    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-        // Xuong DB de update hoa them moi
-        return buildingDTO;
-    }
+//    @PostMapping
+//    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
+//        // Xuong DB de update hoa them moi
+//        return buildingDTO;
+//    }
 
 
     @DeleteMapping("/{ids}")  // nhan bang params + pathvariable

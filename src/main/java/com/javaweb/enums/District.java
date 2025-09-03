@@ -15,14 +15,30 @@ public enum District {
 
     private final String districtName;
 
+
     District(String districtName) {
         this.districtName = districtName; // khoi tao gia tri value
     }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
     public static TreeMap<String, String> type(){
         TreeMap<String, String> districts = new TreeMap<>();
         for(District item : District.values()){ // duyet enum
             districts.put(item.toString(), item.districtName);
         }
         return districts;
+    }
+
+    public static String getDistrictNameByCode(String code){
+        try{
+            District district = District.valueOf(code);
+            return district.getDistrictName();
+        }
+        catch(Exception e){
+            return "";
+        }
     }
 }

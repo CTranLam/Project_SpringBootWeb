@@ -54,6 +54,11 @@ public class BuildingEntity {
     @Column(name = "brokeragefee")
     private Double brokerageFee;
 
+    private String districtCode;
+
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private List<RentAreaEntity> rentAreas = new ArrayList<>();
+
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "assignmentbuilding",
 //            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
@@ -71,6 +76,15 @@ public class BuildingEntity {
     public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
     }
+
+    public String getDistrictCode() {
+        return districtCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
+    }
+
     public Long getId() {
         return id;
     }
