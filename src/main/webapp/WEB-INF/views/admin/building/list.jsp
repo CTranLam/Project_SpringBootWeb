@@ -104,23 +104,23 @@
                                             <div class="col-xs-12">
                                                 <div class="col-xs-3">
                                                     <label class="name">Diện tích từ</label>
-<%--                                                    <input type="number" class="form-control" name = "areaTo" value ="${modelSearch.areaTo}">--%>
-                                                    <form:input class="form-control" path = "areaTo"/>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <label class="name">Diện tích đến</label>
-<%--                                                    <input type="number" class="form-control" name = "areaFrom" value = "${modelSearch.areaFrom}">--%>
+<%--                                                    <input type="number" class="form-control" name = "areaFrom" value ="${modelSearch.areaFrom}">--%>
                                                     <form:input class="form-control" path = "areaFrom"/>
                                                 </div>
                                                 <div class="col-xs-3">
+                                                    <label class="name">Diện tích đến</label>
+<%--                                                    <input type="number" class="form-control" name = "areaTo" value = "${modelSearch.areaTo}">--%>
+                                                    <form:input class="form-control" path = "areaTo"/>
+                                                </div>
+                                                <div class="col-xs-3">
                                                     <label class="name">Giá thuê từ</label>
-<%--                                                    <input type="number" class="form-control" name = "rentPriceTo" value = "">--%>
-                                                    <form:input class="form-control" path = "rentPriceTo"/>
+<%--                                                    <input type="number" class="form-control" name = "rentPriceFrom" value = "">--%>
+                                                    <form:input class="form-control" path = "rentPriceFrom"/>
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <label class="name">Giá thuê đến</label>
-<%--                                                    <input type="number" class="form-control" name = "rentPriceFrom" value = "">--%>
-                                                    <form:input class="form-control" path = "rentPriceFrom"/>
+<%--                                                    <input type="number" class="form-control" name = "rentPriceTo" value = "">--%>
+                                                    <form:input class="form-control" path = "rentPriceTo"/>
                                                 </div>
                                             </div>
                                         </div>

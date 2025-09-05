@@ -7,8 +7,11 @@ public enum District {
     QUAN_2("Quận 2"),
     QUAN_8("Quận 8"),
     QUAN_3("Quận 3"),
+    QUAN_4("Quận 4"),
+    QUAN_6("Quận 6"),
     QUAN_5("Quận 5"),
     QUAN_10("Quận 10"),
+    QUAN_7("Quận 7"),
     QUAN_9("Quận 9"),
     QUAN_11("Quận 11"),
     QUAN_BINH_THANH("Quận Bình Thạnh");

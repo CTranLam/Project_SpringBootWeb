@@ -55,7 +55,7 @@ public class BuildingEntity {
     private Double brokerageFee;
 
     @Column(name = "district")
-    private String districtCode;
+    private String district;
 
     @Column(name = "type")
     private String typeCode;
@@ -90,12 +90,12 @@ public class BuildingEntity {
         this.rentAreas = rentAreas;
     }
 
-    public String getDistrictCode() {
-        return districtCode;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setDistrictCode(String districtCode) {
-        this.districtCode = districtCode;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public Long getId() {

@@ -21,7 +21,7 @@ public class BuildingSearchResponseConverter {
     public BuildingSearchResponse toBuildingDTO(BuildingEntity buildingEntity) {
         BuildingSearchResponse buildingSearchResponse = modelMapper.map(buildingEntity, BuildingSearchResponse.class);
         buildingSearchResponse.setAddress(buildingEntity.getStreet()+", "+buildingEntity.getWard()+", "
-                + District.getDistrictNameByCode(buildingEntity.getDistrictCode()));
+                + District.getDistrictNameByCode(buildingEntity.getDistrict()));
         List<RentAreaEntity> rentAreas = buildingEntity.getRentAreas();
         String areaResult = rentAreas.stream().map(item ->item.getValue().toString()).collect(Collectors.joining(", "));
         buildingSearchResponse.setRentArea(areaResult);
