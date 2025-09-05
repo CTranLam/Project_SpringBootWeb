@@ -8,6 +8,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.service.BuildingService;
 import com.javaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,16 @@ import java.util.List;
 public class BuildingController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BuildingService buildingService;
     // use ModelAndView must use status Get
     @GetMapping(value = "/admin/building-list")
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
         //Xuong DB lay data xong
-        List<BuildingSearchResponse> responseList = new ArrayList<BuildingSearchResponse>();
-
+        List<BuildingSearchResponse> responseList = buildingService.listBuildings(buildingSearchRequest);
         mav.addObject("buildingReponseList",responseList);
         mav.addObject("listStaffs",userService.getStaffs());
         mav.addObject("districts" , District.type());

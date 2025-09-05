@@ -22,7 +22,7 @@ public class BuildingSearchResponseConverter {
         BuildingSearchResponse buildingSearchResponse = modelMapper.map(buildingEntity, BuildingSearchResponse.class);
         buildingSearchResponse.setAddress(buildingEntity.getStreet()+", "+buildingEntity.getWard()+", "
                 + District.getDistrictNameByCode(buildingEntity.getDistrictCode()));
-        List<RentAreaEntity> rentAreas = new ArrayList<>();
+        List<RentAreaEntity> rentAreas = buildingEntity.getRentAreas();
         String areaResult = rentAreas.stream().map(item ->item.getValue().toString()).collect(Collectors.joining(", "));
         buildingSearchResponse.setRentArea(areaResult);
         return buildingSearchResponse;

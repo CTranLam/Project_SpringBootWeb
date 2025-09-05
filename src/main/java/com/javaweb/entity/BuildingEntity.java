@@ -54,7 +54,11 @@ public class BuildingEntity {
     @Column(name = "brokeragefee")
     private Double brokerageFee;
 
+    @Column(name = "district")
     private String districtCode;
+
+    @Column(name = "type")
+    private String typeCode;
 
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<RentAreaEntity> rentAreas = new ArrayList<>();
@@ -64,6 +68,7 @@ public class BuildingEntity {
 //            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
 //            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
 //    private List<UserEntity> userEntities = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
@@ -75,6 +80,14 @@ public class BuildingEntity {
 
     public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
+    public List<RentAreaEntity> getRentAreas() {
+        return rentAreas;
+    }
+
+    public void setRentAreas(List<RentAreaEntity> rentAreas) {
+        this.rentAreas = rentAreas;
     }
 
     public String getDistrictCode() {
