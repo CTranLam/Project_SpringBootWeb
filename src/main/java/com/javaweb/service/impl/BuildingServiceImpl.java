@@ -4,6 +4,7 @@ import com.javaweb.converter.BuildingSearchResponseConverter;
 import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
@@ -63,4 +64,19 @@ public class BuildingServiceImpl implements BuildingService {
         }
         return result;
     }
+
+    @Override
+    public BuildingEditDTO buildingEdit(BuildingEditDTO buildingEditDTO) {
+        BuildingEntity buildingEntity;
+        if(buildingEditDTO.getId() != null){
+            buildingEntity = buildingRepository.findById(buildingEditDTO.getId()).get();
+        }
+        else{
+            buildingEntity = new BuildingEntity();
+        }
+        // convert BuildingEditDTO -> BuildingEntity
+        return null;
+    }
+
+
 }
