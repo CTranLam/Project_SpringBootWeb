@@ -72,6 +72,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     }
 
     public static void querySpecial(BuildingSearchRequest request, Criteria<BuildingEntity> criteria) {
+
         Long rentPriceFrom = request.getRentPriceFrom();
         Long rentPriceTo = request.getRentPriceTo();
         if(rentPriceFrom != null || rentPriceTo != null){
