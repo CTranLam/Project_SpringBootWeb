@@ -222,7 +222,7 @@
                             <th>Số điện thoại quản lý</th>
                             <th>Diện tích sàn</th>
                             <th>Diện tích trống</th>
-                            <th>Diện tích thuê</th>
+                            <th>Giá thuê</th>
                             <th>Phí môi giới</th>
                             <th>Thao tác</th>
                         </tr>
@@ -245,8 +245,8 @@
                             <td>${item.managerPhone}</td>
                             <td>${item.floorArea}</td>
                             <td>${item.rentArea}</td>
-                            <td>${item.id}</td>
-                            <td>${item.id}</td>
+                            <td>${item.rentPrice}</td>
+                            <td>${item.serviceFee}</td>
 
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">

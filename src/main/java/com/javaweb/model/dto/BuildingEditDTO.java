@@ -12,7 +12,7 @@ public class BuildingEditDTO extends AbstractDTO {
     private Long floorArea;
     private String direction;
     private Long level;
-    private Long rentArea;
+    private String rentArea;
     private Long rentPrice;
     private String rentPriceDescription;
     private String serviceFee;
@@ -103,11 +103,11 @@ public class BuildingEditDTO extends AbstractDTO {
         this.level = level;
     }
 
-    public Long getRentArea() {
+    public String getRentArea() {
         return rentArea;
     }
 
-    public void setRentArea(Long rentArea) {
+    public void setRentArea(String rentArea) {
         this.rentArea = rentArea;
     }
 

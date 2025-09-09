@@ -2,6 +2,7 @@ package com.javaweb.api.admin;
 
 import com.javaweb.model.dto.AssigntmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,8 @@ public class BuildingAPI {
     private BuildingService buildingService;
 
     @PostMapping
-    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-
-        return buildingDTO;
+    public BuildingEditDTO addOrUpdateBuilding(@RequestBody BuildingEditDTO buildingEditDTO){
+        return buildingService.buildingEdit(buildingEditDTO);
     }
 
 

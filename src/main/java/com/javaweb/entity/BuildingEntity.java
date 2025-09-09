@@ -82,6 +82,14 @@ public class BuildingEntity {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
     }
 
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
+
     public List<RentAreaEntity> getRentAreas() {
         return rentAreas;
     }

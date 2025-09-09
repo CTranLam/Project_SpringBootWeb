@@ -1,14 +1,18 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.converter.BuildingEditDTOConverter;
+import com.javaweb.converter.BuildingEntityConverter;
 import com.javaweb.converter.BuildingSearchResponseConverter;
 import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
+import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.service.BuildingService;
@@ -17,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +33,12 @@ public class BuildingServiceImpl implements BuildingService {
     private UserRepository userRepository;
     @Autowired
     private BuildingSearchResponseConverter buildingSearchResponseConverter;
+    @Autowired
+    private BuildingEditDTOConverter buildingEditDTOConverter;
+    @Autowired
+    private BuildingEntityConverter buildingEntityConverter;
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
 
     @Override
     public ResponseDTO listStaffs(long buildingId) {
@@ -74,9 +85,22 @@ public class BuildingServiceImpl implements BuildingService {
         else{
             buildingEntity = new BuildingEntity();
         }
-        // convert BuildingEditDTO -> BuildingEntity
-        return null;
+        buildingEditDTOConverter.updateEntityFromDTO(buildingEditDTO,buildingEntity);
+        BuildingEntity buildingEntitySave = buildingRepository.save(buildingEntity);
+
+        // Neu DTO gui rentArea
+        if(buildingEditDTO.getRentArea() != null && !buildingEditDTO.getRentArea().isEmpty()){
+            rentAreaRepository.deleteByBuilding_Id(buildingEditDTO.getId());
+            List<Long> rentArea = Arrays.stream(buildingEditDTO.getRentArea().split(",")).map(String::trim).filter(s -> !s.isEmpty()).map(Long::parseLong).collect(Collectors.toList());
+            for(Long value : rentArea){
+                RentAreaEntity rentAreaEntity = new RentAreaEntity();
+                rentAreaEntity.setBuilding(buildingEntitySave);
+                rentAreaEntity.setValue(value);
+                rentAreaRepository.save(rentAreaEntity);
+            }
+        }
+
+        BuildingEditDTO buildingEditDTOResponse = buildingEntityConverter.buildingEntityToBuildingEditDTO(buildingEntitySave);
+        return buildingEditDTOResponse;
     }
-
-
 }
