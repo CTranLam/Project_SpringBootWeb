@@ -35,7 +35,7 @@
                 </div><!-- /.page-header -->
 
                 <div class="row" style="font-family: 'Times New Roman', Times, serif;">
-                    <form:form id="listForm" modelAttribute="buildingEdit" method="GET">
+                    <form:form id="listForm" modelAttribute="buildingEditDTO" method="GET">
                         <div class="col-xs-12">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
@@ -258,12 +258,12 @@
                                 <div class="form-group">
                                     <label class="col-xs-3"> </label>
                                     <div class="col-xs-9">
-                                        <c:if test="${not empty buildingEdit.id}">
+                                        <c:if test="${not empty buildingEditDTO.id}">
                                             <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding"> Cập nhật toà nhà
                                             </button>
                                             <button type="button" class="btn btn-danger" id = "btnCancel"> Huỷ thao tác</button>
                                         </c:if>
-                                        <c:if test="${empty buildingEdit.id}">
+                                        <c:if test="${empty buildingEditDTO.id}">
                                             <button type="button" class="btn btn-primary" id="btnAddOrUpdateBuilding"> Thêm mới toà nhà
                                             </button>
                                             <button type="button" class="btn btn-danger" id = "btnCancel"> Huỷ thao tác</button>

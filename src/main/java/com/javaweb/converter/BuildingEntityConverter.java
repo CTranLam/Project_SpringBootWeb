@@ -1,6 +1,7 @@
 package com.javaweb.converter;
 
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.model.dto.BuildingEditDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class BuildingEntityConverter {
         if (buildingEntity.getTypeCode() != null) {
             buildingEditDTO.setTypeCode(Arrays.stream(buildingEntity.getTypeCode().split(",")).map(String::trim).collect(Collectors.toList()));
         }
+        List<RentAreaEntity> listRentAreaEntity = buildingEntity.getRentAreas();
+        List<String> rentRentArea = listRentAreaEntity.stream().map(RentAreaEntity::getValue).map(Object::toString).collect(Collectors.toList());
+        String resultRentArea = String.join(",", rentRentArea);
+        buildingEditDTO.setRentArea(resultRentArea);
         return buildingEditDTO;
     }
 }

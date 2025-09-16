@@ -28,6 +28,8 @@ public class BuildingController {
     private BuildingService buildingService;
     // use ModelAndView must use status Get
     @GetMapping(value = "/admin/building-list")
+
+    // Done
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
@@ -52,10 +54,8 @@ public class BuildingController {
     public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         // xuong DB tim building theo id
-       BuildingEditDTO buildingEditDTO = new BuildingEditDTO();
-        buildingEditDTO.setId(id);
-        buildingEditDTO.setName("ACM Building 1");
-        mav.addObject("buildingEdit",buildingEditDTO);
+        BuildingEditDTO buildingEditDTO = buildingService.findBuildingEdit(id);
+        mav.addObject("buildingEditDTO",buildingEditDTO);
         mav.addObject("districts" , District.type());
         mav.addObject("typeCodes" , TypeCode.type());
         return mav;

@@ -31,14 +31,12 @@ public class BuildingEditDTOConverter {
                 String fieldName = field.getName();
                 if(!fieldName.equals("typeCode") && !fieldName.equals("id") && !fieldName.equals("rentArea")){
                     Object fieldValue = field.get(buildingEditDTO);
-                    if(fieldValue != null){
-                        try {
-                            Field entityField = BuildingEntity.class.getDeclaredField(fieldName);
-                            entityField.setAccessible(true);
-                            entityField.set(buildingEntity, fieldValue);
-                        }catch (NoSuchFieldException e){
-                            e.printStackTrace();
-                        }
+                    try {
+                        Field entityField = BuildingEntity.class.getDeclaredField(fieldName);
+                        entityField.setAccessible(true);
+                        entityField.set(buildingEntity, fieldValue);
+                    }catch (NoSuchFieldException e){
+                        e.printStackTrace();
                     }
                 }
             }
