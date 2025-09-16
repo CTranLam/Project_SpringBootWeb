@@ -109,4 +109,5 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
+
 }

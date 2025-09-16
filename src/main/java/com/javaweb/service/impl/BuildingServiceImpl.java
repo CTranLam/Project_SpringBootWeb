@@ -20,6 +20,7 @@ import com.javaweb.service.BuildingService;
 import com.javaweb.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,6 +78,7 @@ public class BuildingServiceImpl implements BuildingService {
         return result;
     }
 
+    @Transactional
     @Override
     public BuildingEditDTO buildingEdit(BuildingEditDTO buildingEditDTO) {
         BuildingEntity buildingEntity;
@@ -91,7 +93,7 @@ public class BuildingServiceImpl implements BuildingService {
 
         // Neu DTO gui rentArea
         if(buildingEditDTO.getRentArea() != null && !buildingEditDTO.getRentArea().isEmpty()){
-            rentAreaRepository.deleteByBuilding_Id(buildingEditDTO.getId());
+            rentAreaRepository.deleteByBuilding_Id(buildingEntitySave.getId());
             List<Long> rentArea = Arrays.stream(buildingEditDTO.getRentArea().split(",")).map(String::trim).filter(s -> !s.isEmpty()).map(Long::parseLong).collect(Collectors.toList());
             for(Long value : rentArea){
                 RentAreaEntity rentAreaEntity = new RentAreaEntity();
@@ -110,6 +112,11 @@ public class BuildingServiceImpl implements BuildingService {
         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
         BuildingEditDTO buildingEditDTO =  buildingEntityConverter.buildingEntityToBuildingEditDTO(buildingEntity);
         return buildingEditDTO;
+    }
+
+    @Override
+    public void deleteBuildings(List<Long> ids) {
+        buildingRepository.deleteAllByIdInBatch(ids);
     }
 
 }

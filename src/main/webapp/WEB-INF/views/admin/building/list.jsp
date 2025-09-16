@@ -416,6 +416,7 @@
          deleteBuildings(buildingId);
     }
 
+
     // xoa nhieu
     $('#btnDeleteBuildings').click(function(e){
         e.preventDefault();
@@ -430,15 +431,15 @@
     function deleteBuildings(data) {
         $.ajax({
             type: "DELETE",
-            url: "${buildingAPI}/" + data,
+            url: "${buildingAPI}",
             contentType: "application/json",// client gửi dữ liệu dưới dạng JSON
             data: JSON.stringify(data), // gui du lieu
             dataType: "JSON", // Định dạng dữ liệu trả ra
             success: function (response) {
-                console.log("Thêm toà nhà thành công");
+                console.log("Xoá toà nhà thành công");
             },
             error: function (response) {
-                console.log("Thêm toà nhà thất bại");
+                console.log("Xoá toà nhà thất bại");
                 console.log(response);
             }
         })

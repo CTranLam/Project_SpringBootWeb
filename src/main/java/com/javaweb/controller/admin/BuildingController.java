@@ -43,7 +43,7 @@ public class BuildingController {
     }
 
     @GetMapping(value = "/admin/building-edit")
-    public ModelAndView buildingEdit(@ModelAttribute("buildingEdit")BuildingEditDTO buildingEditDTO, HttpServletRequest request) {
+    public ModelAndView buildingEdit(@ModelAttribute("buildingEditDTO")BuildingEditDTO buildingEditDTO, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         mav.addObject("districts" , District.type());
         mav.addObject("typeCodes" , TypeCode.type());
