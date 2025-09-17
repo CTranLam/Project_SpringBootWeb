@@ -13,6 +13,7 @@ import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
+import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.repository.BuildingRepository;
@@ -41,13 +42,15 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingEntityConverter buildingEntityConverter;
     @Autowired
     private RentAreaRepository rentAreaRepository;
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
 
     @Override
     public ResponseDTO listStaffs(long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get(); // tim kiem toa nha
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF"); // lay het nhan vien
         List<UserEntity> staffAssignments = building.getAssignmentBuildingEntities().stream().map(AssignmentBuildingEntity::getStaff).collect(Collectors.toList()); // lay nhan vien duoc phan cong
-        List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();
+        List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>();
         ResponseDTO responseDTO = new ResponseDTO();
         for(UserEntity item : staffs){
             StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
@@ -59,9 +62,9 @@ public class BuildingServiceImpl implements BuildingService {
             else{
                 staffResponseDTO.setChecked("");
             }
-            staffResponseDTOS.add(staffResponseDTO);
+            staffResponseDTOs.add(staffResponseDTO);
         }
-        responseDTO.setData(staffResponseDTOS);
+        responseDTO.setData(staffResponseDTOs);
         responseDTO.setMessage("success");
         return responseDTO;
     }
@@ -114,9 +117,24 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingEditDTO;
     }
 
+    @Transactional
     @Override
     public void deleteBuildings(List<Long> ids) {
         buildingRepository.deleteAllByIdInBatch(ids);
     }
 
+    @Transactional
+    @Override
+    public void assignmentStaff(Long buildingId, List<Long> staffIds) {
+        assignmentBuildingRepository.deleteByBuildingId(buildingId);
+        BuildingEntity buildingEntity = buildingRepository.findById(buildingId).get();
+
+        for(Long staffId : staffIds){
+            UserEntity userEntity = userRepository.findById(staffId).get();
+            AssignmentBuildingEntity entitySave = new AssignmentBuildingEntity();
+            entitySave.setBuilding(buildingEntity);
+            entitySave.setStaff(userEntity);
+            assignmentBuildingRepository.save(entitySave);
+        }
+    }
 }

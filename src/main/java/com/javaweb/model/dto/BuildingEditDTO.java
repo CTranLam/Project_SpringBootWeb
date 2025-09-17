@@ -8,7 +8,7 @@ public class BuildingEditDTO extends AbstractDTO {
     private String ward;
     private String street;
     private String structure;
-    private Long numberOfBasement;
+    private Integer numberOfBasement;
     private Long floorArea;
     private String direction;
     private Long level;
@@ -71,11 +71,11 @@ public class BuildingEditDTO extends AbstractDTO {
         this.structure = structure;
     }
 
-    public Long getNumberOfBasement() {
+    public Integer getNumberOfBasement() {
         return numberOfBasement;
     }
 
-    public void setNumberOfBasement(Long numberOfBasement) {
+    public void setNumberOfBasement(Integer numberOfBasement) {
         this.numberOfBasement = numberOfBasement;
     }
 

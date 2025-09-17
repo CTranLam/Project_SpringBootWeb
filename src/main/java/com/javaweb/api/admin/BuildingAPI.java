@@ -4,6 +4,7 @@ import com.javaweb.model.dto.AssigntmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.service.AssigmentBuildingService;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.RentAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class BuildingAPI {
 
     @Autowired
     private RentAreaService rentAreaService;
+
+    @Autowired
+    private AssigmentBuildingService assigmentBuildingService;
+
     // done
     @PostMapping
     public BuildingEditDTO addOrUpdateBuilding(@RequestBody BuildingEditDTO buildingEditDTO){
@@ -33,6 +38,7 @@ public class BuildingAPI {
             return;
         }
         rentAreaService.deleteRentArea(ids);
+        assigmentBuildingService.deleteAssignmentBuildings(ids);
         buildingService.deleteBuildings(ids);
     }
 
@@ -45,7 +51,6 @@ public class BuildingAPI {
 
     @PostMapping("/assignment")
     public void updateAssignmentBuilding(@RequestBody AssigntmentBuildingDTO assignmentBuildingDTO){
-        System.out.println("ok");
-        // xuong DB
+        buildingService.assignmentStaff(assignmentBuildingDTO.getBuildingId(),assignmentBuildingDTO.getStaffs());
     }
 }

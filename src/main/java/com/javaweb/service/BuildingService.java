@@ -14,4 +14,5 @@ public interface BuildingService {
     BuildingEditDTO buildingEdit(BuildingEditDTO buildingEditDTO);
     BuildingEditDTO findBuildingEdit(Long id);
     void deleteBuildings(List<Long> ids);
+    void assignmentStaff(Long buildingId, List<Long> staffIds);
 }

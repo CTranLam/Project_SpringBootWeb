@@ -319,8 +319,8 @@
 // jquery ajax load staff
     function assigmentBuilding(buildingId) {
         $('#assigmentBuildingModal').modal();
-        loadStaff(buildingId)
         $('#buildingid').val(buildingId);
+        loadStaff(buildingId)
     }
 
     function loadStaff(buildingId){
