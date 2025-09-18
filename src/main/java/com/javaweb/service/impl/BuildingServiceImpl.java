@@ -20,9 +20,13 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.service.BuildingService;
 import com.javaweb.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +34,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
+    private static final String UPLOAD_DIR = "D:/SpringBoot/uploads/";
     @Autowired
     private BuildingRepository buildingRepository;
     @Autowired
@@ -136,5 +141,38 @@ public class BuildingServiceImpl implements BuildingService {
             entitySave.setStaff(userEntity);
             assignmentBuildingRepository.save(entitySave);
         }
+    }
+
+    @Override
+    public Page<BuildingSearchResponse> searchBuildings(String name,Pageable pageable) {
+        Page<BuildingEntity> pageEntities = buildingRepository.findByNameContaining(
+                name != null ? name : "",
+                pageable
+        );
+        Page<BuildingSearchResponse> pageDTO = pageEntities.map(entity -> buildingSearchResponseConverter.toBuildingDTO(entity));
+        return pageDTO;
+    }
+
+    @Override
+    public String storeFile(MultipartFile file, Long buildingId) {
+        try{
+            // tao ten file duy nhat
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+            // tao file vat ly
+            File destinationFile = new File(UPLOAD_DIR + fileName);
+            file.transferTo(destinationFile);
+
+            // luu path vao DB
+            BuildingEntity buildingEntity = buildingRepository.findById(buildingId)
+                    .orElseThrow(() -> new RuntimeException("Building not found!!"));
+            buildingEntity.setImagePath("/uploads" + fileName);
+            // lưu vào DB (thực chất là update vì entity đã tồn tại)
+            buildingRepository.save(buildingEntity);
+            return buildingEntity.getImagePath();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

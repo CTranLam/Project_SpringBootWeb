@@ -2,6 +2,8 @@ package com.javaweb.repository;
 
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,4 +11,7 @@ import java.util.List;
 public interface BuildingRepository extends JpaRepository<BuildingEntity,Long>, BuildingRepositoryCustom {
     List<BuildingEntity> findByNameContaining(String name);
     BuildingEntity findBuildingById(Long id);
+    Page<BuildingEntity> findByNameContaining(
+            String name,Pageable pageable
+    );
 }

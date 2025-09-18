@@ -60,4 +60,5 @@ public class BuildingController {
         mav.addObject("typeCodes" , TypeCode.type());
         return mav;
     }
+
 }

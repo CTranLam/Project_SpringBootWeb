@@ -30,7 +30,15 @@ public class BuildingEditDTO extends AbstractDTO {
     private double brokerageFee;
     private List<String> typeCode;
     private String note;
+    private String linkofbuilding;
 
+    public String getLinkofbuilding() {
+        return linkofbuilding;
+    }
+
+    public void setLinkofbuilding(String linkofbuilding) {
+        this.linkofbuilding = linkofbuilding;
+    }
     public String getName() {
         return name;
     }

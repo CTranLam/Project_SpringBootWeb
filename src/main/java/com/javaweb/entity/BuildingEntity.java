@@ -60,6 +60,9 @@ public class BuildingEntity {
     @Column(name = "type")
     private String typeCode;
 
+    @Column(name = "linkofbuilding")
+    private String imagePath;
+
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<RentAreaEntity> rentAreas = new ArrayList<>();
 
@@ -80,6 +83,14 @@ public class BuildingEntity {
 
     public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getTypeCode() {

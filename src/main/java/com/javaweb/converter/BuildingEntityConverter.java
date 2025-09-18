@@ -21,6 +21,9 @@ public class BuildingEntityConverter {
         if (buildingEntity.getTypeCode() != null) {
             buildingEditDTO.setTypeCode(Arrays.stream(buildingEntity.getTypeCode().split(",")).map(String::trim).collect(Collectors.toList()));
         }
+        if(buildingEntity.getImagePath() != null){
+            buildingEditDTO.setLinkofbuilding(buildingEntity.getImagePath());
+        }
         List<RentAreaEntity> listRentAreaEntity = buildingEntity.getRentAreas();
         List<String> rentRentArea = listRentAreaEntity.stream().map(RentAreaEntity::getValue).map(Object::toString).collect(Collectors.toList());
         String resultRentArea = String.join(",", rentRentArea);
