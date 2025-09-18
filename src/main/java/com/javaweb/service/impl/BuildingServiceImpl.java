@@ -155,24 +155,36 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public String storeFile(MultipartFile file, Long buildingId) {
-        try{
-            // tao ten file duy nhat
+        try {
+            // Tạo tên file duy nhất
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-            // tao file vat ly
-            File destinationFile = new File(UPLOAD_DIR + fileName);
+            // Đảm bảo thư mục tồn tại
+            File uploadDir = new File(UPLOAD_DIR);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+
+            // Tạo file vật lý
+            File destinationFile = new File(uploadDir, fileName);
             file.transferTo(destinationFile);
 
-            // luu path vao DB
+            // Tạo URL (phải đồng bộ với WebMvcConfig)
+            String fileUrl = "/uploads/" + fileName;
+
+            // Lưu path vào DB
             BuildingEntity buildingEntity = buildingRepository.findById(buildingId)
                     .orElseThrow(() -> new RuntimeException("Building not found!!"));
-            buildingEntity.setImagePath("/uploads" + fileName);
-            // lưu vào DB (thực chất là update vì entity đã tồn tại)
+            buildingEntity.setImagePath(fileUrl);
+
+            // Lưu lại entity
             buildingRepository.save(buildingEntity);
-            return buildingEntity.getImagePath();
-        }catch (Exception e){
+
+            // Trả về URL để FE hiển thị ảnh luôn
+            return fileUrl;
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Upload file failed!");
         }
-        return null;
     }
 }

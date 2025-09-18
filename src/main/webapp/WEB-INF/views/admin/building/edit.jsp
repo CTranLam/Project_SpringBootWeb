@@ -257,9 +257,15 @@
                                 <div class="form-group">
                                     <label class="col-xs-3">Ảnh toà nhà</label>
                                     <div class="col-xs-9">
+                                        <c:if test="${not empty buildingEditDTO.linkofbuilding}">
+                                            <img src="${buildingEditDTO.linkofbuilding}"
+                                                 style="max-width:200px; margin-right:10px;"/>
+                                        </c:if>
                                         <input type="file" name="imageFile" class="form-control"/>
+
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-xs-3"> </label>
                                     <div class="col-xs-9">

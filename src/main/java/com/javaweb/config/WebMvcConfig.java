@@ -11,7 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // map tat ca request /Uploads/** toi thu muc D:/Uploads/
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:D:/SpringBoot/Uploads/");
+                .addResourceLocations("file:/D:/SpringBoot/uploads/");
 
 
     }
