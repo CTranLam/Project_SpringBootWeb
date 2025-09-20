@@ -4,6 +4,7 @@ import com.javaweb.api.criteriaAPI.Criteria;
 import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.stereotype.Repository;
@@ -25,10 +26,10 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
     public static void joinTable(BuildingSearchRequest request, Criteria<BuildingEntity> criteria) {
         if(request.getStaffId() != null){
-            Join<BuildingEntity, AssignmentBuildingEntity> ab = criteria.getRoot().join("assignmentBuildingEntities");
-            criteria.getRoot().alias("b");
-            Long staffId = request.getStaffId();
-            criteria.getPredicates().add(criteria.getCriteriaBuilder().equal(ab.get("staff").get("id"), staffId));
+            Join<BuildingEntity, UserEntity> staffJoin = criteria.getRoot().join("userEntities", JoinType.LEFT);
+            criteria.getPredicates().add(
+                    criteria.getCriteriaBuilder().equal(staffJoin.get("id"), request.getStaffId())
+            );
         }
         if(request.getAreaFrom() != null || request.getAreaTo() != null){
             Join<BuildingEntity, RentAreaEntity> ra = criteria.getRoot().join("rentAreas");

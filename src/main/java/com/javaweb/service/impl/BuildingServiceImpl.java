@@ -7,13 +7,11 @@ import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.entity.UserEntity;
-import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
-import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.repository.BuildingRepository;
@@ -30,6 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,21 +46,20 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingEntityConverter buildingEntityConverter;
     @Autowired
     private RentAreaRepository rentAreaRepository;
-    @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
 
     @Override
     public ResponseDTO listStaffs(long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get(); // tim kiem toa nha
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF"); // lay het nhan vien
-        List<UserEntity> staffAssignments = building.getAssignmentBuildingEntities().stream().map(AssignmentBuildingEntity::getStaff).collect(Collectors.toList()); // lay nhan vien duoc phan cong
+        Set<Long> assignedStaffIds = building.getUserEntities().stream().map(UserEntity::getId).collect(Collectors.toSet()); // lay nhan vien dc phan cong
+
         List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>();
         ResponseDTO responseDTO = new ResponseDTO();
         for(UserEntity item : staffs){
             StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
             staffResponseDTO.setFullName(item.getFullName());
             staffResponseDTO.setStaffId(item.getId());
-            if(staffAssignments.contains(item)){
+            if(assignedStaffIds.contains(item.getId())){
                 staffResponseDTO.setChecked("checked");
             }
             else{
@@ -69,6 +67,7 @@ public class BuildingServiceImpl implements BuildingService {
             }
             staffResponseDTOs.add(staffResponseDTO);
         }
+
         responseDTO.setData(staffResponseDTOs);
         responseDTO.setMessage("success");
         return responseDTO;
@@ -125,22 +124,24 @@ public class BuildingServiceImpl implements BuildingService {
     @Transactional
     @Override
     public void deleteBuildings(List<Long> ids) {
-        buildingRepository.deleteAllByIdInBatch(ids);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAllById(ids);
+        for(BuildingEntity item : buildingEntities){
+            item.getUserEntities().clear();
+        }
+        buildingRepository.deleteAllById(ids);
     }
 
     @Transactional
     @Override
     public void assignmentStaff(Long buildingId, List<Long> staffIds) {
-        assignmentBuildingRepository.deleteByBuildingId(buildingId);
+        // tim building
         BuildingEntity buildingEntity = buildingRepository.findById(buildingId).get();
-
-        for(Long staffId : staffIds){
-            UserEntity userEntity = userRepository.findById(staffId).get();
-            AssignmentBuildingEntity entitySave = new AssignmentBuildingEntity();
-            entitySave.setBuilding(buildingEntity);
-            entitySave.setStaff(userEntity);
-            assignmentBuildingRepository.save(entitySave);
-        }
+        // tim ds staff
+        List<UserEntity> userList = userRepository.findAllById(staffIds);
+        // clear ds staff cu va add staff moi
+        buildingEntity.getUserEntities().clear();
+        buildingEntity.getUserEntities().addAll(userList);
+        buildingRepository.save(buildingEntity);
     }
 
     @Override
@@ -187,4 +188,5 @@ public class BuildingServiceImpl implements BuildingService {
             throw new RuntimeException("Upload file failed!");
         }
     }
+
 }
