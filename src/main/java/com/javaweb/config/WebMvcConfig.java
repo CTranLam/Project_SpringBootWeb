@@ -9,7 +9,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // map tat ca request /Uploads/** toi thu muc D:/Uploads/
+        // map tat ca request /uploads/** toi thu muc D:/Uploads/
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:/D:/SpringBoot/uploads/");
 

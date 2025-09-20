@@ -34,13 +34,14 @@ public class BuildingAPI {
     @PostMapping
     public BuildingEditDTO addOrUpdateBuilding(@ModelAttribute BuildingEditDTO buildingEditDTO,
                                                @RequestParam(name = "imageFile", required = false)MultipartFile imageFile){
+        BuildingEditDTO buildingSave = buildingService.buildingEdit(buildingEditDTO);
         // luu file vao DB
         if(imageFile != null && !imageFile.isEmpty()){
-            String filePath = buildingService.storeFile(imageFile, buildingEditDTO.getId());
-            buildingEditDTO.setLinkofbuilding(filePath);
+            String filePath = buildingService.storeFile(imageFile, buildingSave.getId());
+            buildingSave.setLinkofbuilding(filePath);
+            buildingSave = buildingService.buildingEdit(buildingSave);
         }
-        // luu DTO vao DB
-        return buildingService.buildingEdit(buildingEditDTO);
+        return buildingSave;
     }
 
     // done

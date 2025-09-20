@@ -162,14 +162,14 @@ public class BuildingServiceImpl implements BuildingService {
             // Đảm bảo thư mục tồn tại
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
+                uploadDir.mkdirs();  // nếu chưa có thì tạo thư mục
             }
 
-            // Tạo file vật lý
+            // Tạo file vật lý và copy dữ liệu từ MultipartFile vào
             File destinationFile = new File(uploadDir, fileName);
             file.transferTo(destinationFile);
 
-            // Tạo URL (phải đồng bộ với WebMvcConfig)
+            // Tạo đường dẫn (URL) cho FE sử dụng (phải đồng bộ với WebMvcConfig)
             String fileUrl = "/uploads/" + fileName;
 
             // Lưu path vào DB
