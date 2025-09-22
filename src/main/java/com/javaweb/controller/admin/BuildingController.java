@@ -27,9 +27,8 @@ public class BuildingController {
     @Autowired
     private BuildingService buildingService;
     // use ModelAndView must use status Get
+    // done
     @GetMapping(value = "/admin/building-list")
-
-    // Done
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
