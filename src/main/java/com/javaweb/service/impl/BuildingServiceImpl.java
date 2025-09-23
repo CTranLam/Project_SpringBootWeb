@@ -97,7 +97,7 @@ public class BuildingServiceImpl implements BuildingService {
             buildingEntity = new BuildingEntity();
         }
         buildingEditDTOConverter.updateEntityFromDTO(buildingEditDTO,buildingEntity);
-        BuildingEntity buildingEntitySave = buildingRepository.save(buildingEntity);
+        BuildingEntity buildingEntitySave = buildingRepository.save(buildingEntity); // co id la tu hieu update
 
         // Neu DTO gui rentArea
         if(buildingEditDTO.getRentArea() != null && !buildingEditDTO.getRentArea().isEmpty()){
