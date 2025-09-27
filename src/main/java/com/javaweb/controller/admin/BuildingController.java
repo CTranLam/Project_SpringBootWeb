@@ -8,6 +8,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.BuildingEditDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class BuildingController {
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffId(staffId);
+            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+        }
+        else{
+            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+        }
         //Xuong DB lay data xong
         List<BuildingSearchResponse> responseList = buildingService.listBuildings(buildingSearchRequest);
         mav.addObject("buildingReponseList",responseList);

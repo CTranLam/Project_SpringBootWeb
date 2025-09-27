@@ -21,4 +21,5 @@ public interface BuildingService {
     void assignmentStaff(Long buildingId, List<Long> staffIds);
     Page<BuildingSearchResponse> searchBuildings(String name, Pageable pageable);
     String storeFile(MultipartFile file, Long buildingId);
+    List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
 }

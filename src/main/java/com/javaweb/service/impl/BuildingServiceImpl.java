@@ -189,4 +189,14 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }
 
+    @Override
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+        List<BuildingEntity> listEntity = buildingRepository.findAll();
+        List<BuildingSearchResponse> result = new ArrayList<>();
+        for(BuildingEntity item : listEntity){
+            result.add(buildingSearchResponseConverter.toBuildingDTO(item));
+        }
+        return result;
+    }
+
 }
